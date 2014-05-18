@@ -5,7 +5,7 @@ import java.util.*;
 import javax.swing.*;
 
 /*
-	Authors: Jacqueline Ericsson Shapour Jahanshahi
+	Authors: Jacqueline Eriksson Shapour Jahanshahi
 */
 
 
