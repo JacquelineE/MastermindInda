@@ -5,21 +5,26 @@ import javax.swing.*;
 
 public class Row extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int w = 26,
 				h = w;
 
-	private boolean middleRow = false; // Rows that belongs to PanelOfRows except for the first row.
 	private String	rownr = "";
 	private String places = "";
 	private String colors = "";
 	private Mastermind gameFrame;
 	private ArrayList<Color> code  = new ArrayList<Color>();	// The code that should be presented to the player.
 	private boolean answerRow = false;
+	private int offset = 70;
 	
-	public static final Color activeColor = Color.gray;
+	public static final Color activeColor = new Color(150, 150, 150);
 	public static final Color inactiveColor = new Color(50, 50, 50);
 	public static final Color backColor = Color.black;
-	public static final Color answerColor = Color.gray;
+	public static final Color answerColor = new Color(90, 90, 90);
 
 	public Row() {
 		this.setBackground(backColor);
@@ -34,6 +39,7 @@ public class Row extends JPanel {
 		gameFrame = gf;
 		code = new ArrayList<Color>(gf.makeEmptyCode());
 		answerRow = true;
+		offset = 20;
 	}
 
 	/**
@@ -45,26 +51,27 @@ public class Row extends JPanel {
 		this();
 		gameFrame = gm;
 		rownr = (num + 1) + ".";
-		if (num < gm.getMaxGuesses() - 1) {	// Rows that belongs to PanelOfRows except for the last row.
-			middleRow = true;
-		}
 		this.setPreferredSize(new Dimension(460, 50));
 	}
 
 	/**
 	 * giveFeedback() sets the labels of the feedback in this Row.
 	 * @param places amount of correct colors in the <b>correct</b> place.
-	 * @param color amount of correct colors in the <b>wrong</b> place.
+	 * @param colors amount of correct colors in the <b>wrong</b> place.
 	 */
-	public void giveFeedback(int places, int color) {
+	public void giveFeedback(int places, int colors) {
 		this.places = "Correct place and color: " + places;
-		this.colors = "Correct color but wrong place: " + color;
-		System.out.println("HERES THE FEEDBACK YOU REQUESTED SIR!"); // TESTRAAAAAAAD <-----------------------
+		this.colors = "Correct color but wrong place: " + colors;
 		repaint();
 	}
 
+	/**
+	 * This method handles the background color of the row.<br><br>
+	 * If the row is <b>active</b> it should be highlighted with a different color.<br>
+	 * The rows that have been surpassed should look <b>inactive</b>.
+	 * @param active true if active, false if inactive.
+	 */
 	public void setActive(boolean active) {
-
 		if (active) {
 			this.setBackground(activeColor);
 		} else {
@@ -73,7 +80,7 @@ public class Row extends JPanel {
 	}
 	
 	/**
-	 * Reset row
+	 * Resets this rows' background color, feedback and code.
 	 */
 	public void resetRow() {
 		places = "";
@@ -88,7 +95,7 @@ public class Row extends JPanel {
 	
 	
 	/**
-	 * setCode(code) sets the code that this Row will contain.
+	 * Sets and shows a new code in this row.
 	 * @param gameCode is the code to be showed in this Row.
 	 */
 	public void setCode(ArrayList<Color> gameCode) {
@@ -97,7 +104,7 @@ public class Row extends JPanel {
 	}
 
 	/**
-	 * paint() draws this Row onto the JPanel "canvas".
+	 * paint() draws this Row onto the JPanel 'canvas'.
 	 */
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -105,14 +112,17 @@ public class Row extends JPanel {
 		g.setColor(Color.white);
 		g.setFont(new Font("Serif", Font.BOLD, 20));
 		g.drawString(rownr, 10, 30);
+		
 		// Draw the code:
 		for (int i = 0; i < gameFrame.getNumberOfColors(); i++) {
 			g.setColor(code.get(i));
-			g.fillOval((70 + 35 * i), 11, w, h);	
+			g.fillOval((offset + 35 * i), 11, w, h);	
 		}
+		
 		// Draw the feedback:
-		g.setFont(new Font("Serif", Font.BOLD, 14));
-		g.setColor(Color.red);
+		g.setFont(new Font("Serif", Font.PLAIN, 16));
+		g.setColor(new Color(204, 255, 137));
+		//g.setColor(Color.red);
 		g.drawString(places, 250, 20);
 		g.setColor(Color.white);
 		g.drawString(colors, 250, 36);
