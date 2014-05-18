@@ -4,6 +4,10 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
+/*
+	Authors: Jacqueline Ericsson Shapour Jahanshahi
+*/
+
 
 public class Mastermind extends JFrame implements ActionListener {
 	/**
