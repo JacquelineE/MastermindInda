@@ -1,4 +1,6 @@
 MastermindInda
 ==============
 
-This is our implementation of a Mastermind game 
+This is our implementation of a Mastermind game
+
+Final version
